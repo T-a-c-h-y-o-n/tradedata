@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradeData - Find Companies Worth Calling</title>
+<meta name="description" content="TradeData provides verified trade company data for sales teams. Start with 100 manually checked JB-SG food traders, business emails, public phones, source URLs and verification dates.">
+<link rel="canonical" href="https://tradedata.ai2eo.com/">
+<meta property="og:title" content="TradeData - Find Companies Worth Calling">
+<meta property="og:description" content="Verified trade data for sales teams. Start with 100 manually checked JB-SG food traders. Business emails, public phones, source URLs, September 2026 verification. $49 one-time pilot.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tradedata.ai2eo.com/">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23127ee3'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='34' font-weight='700' fill='white' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
+<style>
+/* ============ Clearbit-derived tokens (Refero style 6221ba67) ============ */
+:root{
+  --color-midnight-ink:#091135;
+  --color-electric-blue:#0f77ff;
+  --color-cobalt-surface:#127ee3;
+  --color-slate:#36394a;
+  --color-frost-border:#e1e9f0;
+  --color-mist:#b1bbcd;
+  --color-paper:#ffffff;
+  --color-lavender-wash:#f5f3ff;
+  --color-success:#16a34a;
+  --color-error:#dc2626;
+  --font-stack:'InterVar',Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --radius-cards:12px;
+  --radius-inputs:8px;
+  --radius-buttons:8px;
+  --radius-tags:9999px;
+  --page-max-width:1200px;
+  --section-gap:64px;
+  --card-padding:24px;
+  /* Motion (same easing family as reference) */
+  --ease-out:cubic-bezier(0.20,0.80,0.20,1.00);
+  --ease-in-out:cubic-bezier(0.40,0.00,0.20,1.00);
+  --dur-fast:120ms;
+  --dur-base:220ms;
+  --dur-slow:400ms;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:var(--font-stack);
+  font-size:16px;line-height:1.5;letter-spacing:.008em;
+  color:var(--color-midnight-ink);background:var(--color-paper);
+  -webkit-font-smoothing:antialiased;
+}
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--color-midnight-ink);color:#fff;padding:12px 20px;z-index:100;border-radius:0 0 8px 0}
+.skip-link:focus{left:0}
+.container{max-width:var(--page-max-width);margin:0 auto;padding:0 20px}
+section{padding:var(--section-gap) 0}
+h1,h2,h3{line-height:1.25;font-weight:600;letter-spacing:.016em}
+h1{font-size:clamp(34px,5.2vw,56px)}
+h2{font-size:clamp(26px,3.6vw,32px);margin-bottom:12px}
+h3{font-size:20px}
+p.lead{font-size:18px;color:var(--color-slate);line-height:1.5}
+a{color:var(--color-electric-blue)}
+:focus-visible{outline:2px solid var(--color-electric-blue);outline-offset:2px;border-radius:4px}
+
+/* ============ Eyebrow / tags ============ */
+.eyebrow{
+  display:inline-block;font-size:14px;font-weight:500;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--color-midnight-ink);margin-bottom:12px;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--color-lavender-wash);color:var(--color-midnight-ink);
+  font-size:14px;font-weight:500;border-radius:var(--radius-tags);
+  padding:8px 16px;border:1px solid var(--color-frost-border);
+}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:var(--color-electric-blue);flex:none}
+
+/* ============ Buttons ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:inherit;font-size:16px;font-weight:500;line-height:1;
+  padding:14px 24px;border-radius:var(--radius-buttons);cursor:pointer;
+  text-decoration:none;border:1px solid transparent;transition:background .15s ease;
+}
+.btn-primary{background:var(--color-cobalt-surface);color:#fff}
+.btn-primary:hover{background:#0e6cc4}
+.btn-ghost{background:transparent;color:var(--color-midnight-ink);border-color:var(--color-frost-border)}
+.btn-ghost:hover{border-color:var(--color-mist)}
+.btn-block{width:100%}
+.btn:active{transform:translateY(1px)}
+
+/* ============ Nav (floating pill, compacts on scroll) ============ */
+.site-nav{position:sticky;top:16px;z-index:50;padding:0 20px;pointer-events:none;transition:top var(--dur-slow) var(--ease-out)}
+.site-nav[data-state="scrolled"]{top:8px}
+.nav-inner{
+  pointer-events:auto;max-width:var(--page-max-width);margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:4px 8px 4px 16px;background:rgba(255,255,255,.82);
+  -webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
+  border:1px solid var(--color-frost-border);border-radius:var(--radius-tags);
+  box-shadow:0 8px 24px -12px rgba(9,17,53,.18),0 2px 6px -2px rgba(9,17,53,.08);
+  transition:max-width var(--dur-slow) var(--ease-out),padding var(--dur-base) var(--ease-out),background var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out),transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out);
+}
+.site-nav[data-state="scrolled"] .nav-inner{
+  max-width:896px;padding:4px 4px 4px 16px;background:rgba(255,255,255,.94);
+  border-color:rgba(15,119,255,.35);transform:scale(.98);
+  box-shadow:0 14px 34px -12px rgba(9,17,53,.30),0 2px 6px -2px rgba(9,17,53,.10);
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--color-midnight-ink)}
+.brand-mark{width:40px;height:40px;border-radius:50%;background:var(--color-cobalt-surface);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:#fff;flex:none}
+.brand-name{font-weight:600;font-size:23px;line-height:1.2}
+.brand-sub{font-size:12px;color:var(--color-slate);font-weight:400}
+.nav-links{display:none;gap:24px}
+.nav-links a{color:var(--color-midnight-ink);text-decoration:none;font-size:15px}
+.nav-links a:hover{color:var(--color-electric-blue)}
+.nav-cta{padding:10px 18px;font-size:15px;border-radius:var(--radius-tags)}
+.site-nav[data-state="scrolled"] .nav-links{gap:16px}
+.site-nav[data-state="scrolled"] .nav-links a{font-size:14px}
+@media(min-width:860px){.nav-links{display:flex}}
+@media(max-width:560px){.brand-sub{display:none}}
+
+/* ============ Hero (staggered rise + cursor spotlight) ============ */
+.hero{background:var(--color-paper);padding:48px 0 56px;position:relative;isolation:isolate;overflow:hidden}
+.hero-spotlight{
+  position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(520px circle at var(--mx,50%) var(--my,35%),rgba(15,119,255,.10),transparent 60%);
+}
+.hero h1 .rise{display:block;opacity:0;transform:translateY(16px);animation:rise var(--dur-slow) var(--ease-out) forwards}
+.hero h1 .rise:nth-child(1){animation-delay:60ms}
+.hero h1 .rise:nth-child(2){animation-delay:160ms}
+.hero h1 .rise:nth-child(3){animation-delay:260ms}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+.pill .dot,.terminal-live .dot{animation:pulse 2.4s var(--ease-in-out) infinite}
+.hero-grid{display:grid;gap:32px;align-items:center}
+@media(min-width:960px){.hero-grid{grid-template-columns:1fr 1.05fr}.hero{padding:64px 0}}
+.hero-copy p.lead{margin:20px 0 24px;max-width:34rem}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin-top:4px}
+.hero-meta li{
+  font-size:14px;color:var(--color-slate);border:1px solid var(--color-frost-border);
+  border-radius:var(--radius-tags);padding:6px 14px;background:var(--color-paper);
+}
+.hero-meta strong{color:var(--color-midnight-ink);font-weight:600}
+
+/* ============ Data terminal panel ============ */
+.terminal{
+  background:var(--color-paper);border:1px solid var(--color-frost-border);
+  border-radius:var(--radius-cards);overflow:hidden;
+  box-shadow:0 16px 40px -20px rgba(9,17,53,.25),0 2px 8px -2px rgba(9,17,53,.08);
+}
+.terminal-bar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:12px 16px;border-bottom:1px solid var(--color-frost-border);
+  background:var(--color-lavender-wash);flex-wrap:wrap;
+}
+.terminal-title{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.terminal-live{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--color-slate)}
+.terminal-live .dot{width:8px;height:8px;border-radius:50%;background:var(--color-success)}
+.table-wrap{overflow-x:auto}
+table.data{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+table.data th{
+  text-align:left;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--color-slate);padding:10px 12px;border-bottom:1px solid var(--color-frost-border);white-space:nowrap;
+}
+table.data td{padding:10px 12px;border-bottom:1px solid var(--color-frost-border);vertical-align:middle}
+table.data tr:last-child td{border-bottom:none}
+td.company{font-weight:600;white-space:nowrap}
+.check{color:var(--color-electric-blue);font-weight:700}
+.muted{color:var(--color-slate)}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+.tag{display:inline-block;font-size:12px;font-weight:500;border:1px solid var(--color-frost-border);border-radius:var(--radius-tags);padding:2px 10px;white-space:nowrap}
+.tag-ok{color:var(--color-success);border-color:#bbf7d0;background:#f0fdf4}
+.tag-na{color:var(--color-slate);background:#f8fafc}
+tr.blurred td{filter:blur(5px);user-select:none;pointer-events:none}
+.terminal-foot{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  padding:12px 16px;border-top:1px solid var(--color-frost-border);font-size:13px;color:var(--color-slate);
+}
+.terminal-foot strong{color:var(--color-midnight-ink)}
+
+/* ============ Trust strip ============ */
+.trust{background:var(--color-lavender-wash);border-top:1px solid var(--color-frost-border);border-bottom:1px solid var(--color-frost-border);padding:24px 0}
+.trust-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;list-style:none}
+@media(min-width:860px){.trust-grid{grid-template-columns:repeat(4,1fr)}}
+.trust-grid li{text-align:left}
+.trust-num{font-size:28px;font-weight:600;letter-spacing:.01em}
+.trust-label{font-size:14px;color:var(--color-slate)}
+
+/* ============ Preview section ============ */
+.preview-note{margin-top:16px;font-size:14px;color:var(--color-slate)}
+.section-head{max-width:44rem;margin-bottom:32px}
+#preview .section-head{text-align:center;margin-left:auto;margin-right:auto}
+
+/* ============ Problem / solution ============ */
+.problem-grid{display:grid;gap:16px;margin-top:8px}
+@media(min-width:860px){.problem-grid{grid-template-columns:repeat(3,1fr)}}
+.card{
+  background:var(--color-paper);border:1px solid var(--color-frost-border);
+  border-radius:var(--radius-cards);padding:var(--card-padding);
+}
+.card h3{font-size:18px;margin-bottom:8px}
+.card p{font-size:15px;color:var(--color-slate)}
+.card .icon{font-size:22px;display:block;margin-bottom:12px}
+.solution-band{
+  margin-top:24px;background:var(--color-midnight-ink);color:#fff;
+  border-radius:var(--radius-cards);padding:28px 24px;
+}
+.solution-band h3{margin-bottom:8px}
+.solution-band p{color:#c7cede;font-size:16px;max-width:none}
+
+/* ============ Steps ============ */
+.steps{display:grid;gap:16px;counter-reset:step}
+@media(min-width:860px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step{position:relative;padding-top:8px}
+.step-num{font-size:14px;font-weight:600;color:var(--color-electric-blue);letter-spacing:.08em;margin-bottom:8px}
+.step h3{margin-bottom:8px}
+.step p{font-size:15px;color:var(--color-slate)}
+.steps-cta{margin-top:24px}
+
+/* ============ Verification ============ */
+.verify{background:var(--color-lavender-wash);border-top:1px solid var(--color-frost-border);border-bottom:1px solid var(--color-frost-border)}
+.verify-grid{display:grid;gap:16px}
+@media(min-width:860px){.verify-grid{grid-template-columns:repeat(2,1fr)}}
+.verify-item{display:flex;gap:12px;align-items:flex-start}
+.verify-item .check{font-size:18px;line-height:1.4;flex:none}
+.verify-item h3{font-size:16px;margin-bottom:4px}
+.verify-item p{font-size:15px;color:var(--color-slate)}
+
+/* ============ Pricing ============ */
+.pricing-wrap{display:grid;gap:24px;align-items:start}
+@media(min-width:960px){.pricing-wrap{grid-template-columns:1.1fr .9fr}}
+.price-card{border:2px solid var(--color-midnight-ink);box-shadow:0 20px 48px -20px rgba(9,17,53,.35),0 2px 8px -2px rgba(9,17,53,.10)}
+.price{font-size:56px;font-weight:600;letter-spacing:.01em;line-height:1.1}
+.price-sub{font-size:15px;color:var(--color-slate);margin:4px 0 20px}
+.feature-list{list-style:none;margin-bottom:24px}
+.feature-list li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:15px}
+.feature-list .check{flex:none;line-height:1.5}
+.delivery-note{margin-top:16px;font-size:14px;color:var(--color-slate);border-top:1px solid var(--color-frost-border);padding-top:16px}
+.delivery-note strong{color:var(--color-midnight-ink)}
+.sub-note{font-size:14px;color:var(--color-slate);background:var(--color-lavender-wash);border:1px solid var(--color-frost-border);border-radius:var(--radius-cards);padding:16px 20px}
+
+/* ============ Guarantee ============ */
+.guarantee-card{border-left:4px solid var(--color-electric-blue);box-shadow:0 16px 40px -20px rgba(9,17,53,.25),0 2px 8px -2px rgba(9,17,53,.08)}
+.guarantee-card p{font-size:16px;color:var(--color-slate);margin-top:8px;max-width:none}
+.guarantee-card p strong{color:var(--color-midnight-ink)}
+
+/* ============ FAQ ============ */
+.faq-list{max-width:48rem}
+details.faq{border:1px solid var(--color-frost-border);border-radius:var(--radius-cards);margin-bottom:12px;background:var(--color-paper);overflow:hidden}
+details.faq summary{cursor:pointer;list-style:none;padding:18px 20px;font-weight:600;font-size:16px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";color:var(--color-electric-blue);font-size:22px;font-weight:400;flex:none}
+details.faq[open] summary::after{content:"-"}
+details.faq .faq-body{padding:0 20px 20px;font-size:15px;color:var(--color-slate)}
+
+/* ============ Sample form ============ */
+.sample{background:var(--color-lavender-wash);border-top:1px solid var(--color-frost-border)}
+.sample-grid{display:grid;gap:24px;align-items:start}
+@media(min-width:960px){.sample-grid{grid-template-columns:1fr 1fr}}
+.form-card{background:var(--color-paper);box-shadow:0 16px 40px -20px rgba(9,17,53,.25),0 2px 8px -2px rgba(9,17,53,.08)}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
+.field input,.field select{
+  width:100%;font-family:inherit;font-size:16px;color:var(--color-midnight-ink);
+  border:1px solid var(--color-frost-border);border-radius:var(--radius-inputs);
+  padding:12px 14px;background:var(--color-paper);
+}
+.field input:focus,.field select:focus{outline:none;border-color:var(--color-electric-blue);box-shadow:0 0 0 1px var(--color-electric-blue)}
+.field .hint{font-size:13px;color:var(--color-slate);margin-top:6px}
+.field .error-msg{display:none;font-size:13px;color:var(--color-error);margin-top:6px}
+.field.invalid input,.field.invalid select{border-color:var(--color-error)}
+.field.invalid .error-msg{display:block}
+.hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.submit-error{display:none;font-size:14px;color:var(--color-error);margin:0 0 12px}
+.submit-error.show{display:block}
+.form-success{display:none;text-align:left}
+.form-success.show{display:block}
+.form-success h3{margin-bottom:8px}
+.form-success p{font-size:15px;color:var(--color-slate);margin-bottom:16px}
+.success-check{width:48px;height:48px;border-radius:50%;background:#f0fdf4;border:1px solid #bbf7d0;color:var(--color-success);font-size:24px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+
+/* ============ Final CTA ============ */
+.final{background:var(--color-midnight-ink);color:#fff;text-align:center}
+.final h2{color:#fff}
+.final p{color:#c7cede;max-width:36rem;margin:12px auto 24px;font-size:17px}
+.final .hero-ctas{justify-content:center;margin-bottom:0}
+.final .btn-ghost{color:#fff;border-color:#33406b}
+.final .btn-ghost:hover{border-color:#5b6b9e}
+
+.btn{transition:transform var(--dur-fast) var(--ease-out),background var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out)}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn .arr{display:inline-block;transition:transform var(--dur-fast) var(--ease-out)}
+.btn:hover .arr{transform:translateX(3px)}
+
+/* ============ Motion: card lift, FAQ chevron, scroll reveal ============ */
+.card{transition:transform var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out)}
+.problem-grid .card:hover,.verify-grid .card:hover,.steps .card:hover{
+  transform:translateY(-2px);border-color:var(--color-mist);
+  box-shadow:0 12px 28px -12px rgba(9,17,53,.25),0 2px 6px -2px rgba(9,17,53,.12);
+}
+.trust-num{font-variant-numeric:tabular-nums}
+details.faq summary::after{transition:transform var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out)}
+details.faq[open] summary::after{transform:rotate(45deg);color:var(--color-electric-blue)}
+details.faq summary:hover{color:var(--color-electric-blue)}
+[data-reveal]{opacity:0;transform:translateY(14px);transition:opacity .5s var(--ease-out),transform .5s var(--ease-out)}
+[data-reveal].in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  html{scroll-behavior:auto}
+  .hero h1 .rise{opacity:1;transform:none;animation:none}
+  [data-reveal]{opacity:1;transform:none}
+  .hero-spotlight{display:none}
+}
+
+.hover-shadow{transition:transform var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out)}
+.hover-shadow:hover{transform:translateY(-2px);border-color:var(--color-mist);box-shadow:0 12px 28px -12px rgba(9,17,53,.25),0 2px 6px -2px rgba(9,17,53,.12)}
+
+/* ============ Footer ============ */
+footer.site{border-top:1px solid var(--color-frost-border);padding:24px 0;font-size:14px;color:var(--color-slate)}
+.foot-legal{margin-top:16px;font-size:13px;line-height:1.6;max-width:44rem}
+.foot-center{text-align:center;max-width:none;margin:0 auto}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ NAV ============ -->
+<header class="site-nav" data-state="rest">
+  <div class="container nav-inner">
+    <a class="brand" href="#top" aria-label="TradeData home">
+      <span class="brand-mark" aria-hidden="true">T</span>
+      <span>
+        <span class="brand-name">TradeData</span><br>
+        <span class="brand-sub">Verified trade data for sales teams</span>
+      </span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#preview">Sample</a>
+      <a href="#how">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary nav-cta" href="#sample" data-track="sample_cta_click" data-cta="nav">Get 10 Free Rows</a>
+  </div>
+</header>
+
+<main id="main">
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-spotlight" aria-hidden="true"></div>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="pill"><span class="dot" aria-hidden="true"></span>JB-SG Food Trader List · September 2026 Pilot</span>
+      <h1 style="margin-top:16px"><span class="rise">Find the companies</span> <span class="rise">worth calling.</span></h1>
+      <p class="lead">TradeData gives sales teams verified trade prospects with business emails, public business phones, source URLs and verification dates - starting with 100 JB-SG food traders.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#sample" data-track="sample_cta_click" data-cta="hero-primary">Get 10 Free Rows <span class="arr" aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost" href="#pricing" data-track="purchase_cta_click" data-cta="hero-secondary">Get the Full 100 - $49</a>
+      </div>
+      <ul class="hero-meta" aria-label="Offer facts">
+        <li><strong>Sep 2026</strong> verified</li>
+        <li><strong>100</strong> rows</li>
+        <li><strong>$49</strong> one-time</li>
+        <li><strong>24h</strong> delivery</li>
+      </ul>
+    </div>
+    <div class="terminal" data-reveal role="img" aria-label="TradeData verified company data preview for the JB-SG food trader pilot: company, segment, city, contact availability and verification status">
+      <div class="terminal-bar">
+        <span class="terminal-title">JB-SG Food Traders · Verified Sep 2026</span>
+        <span class="terminal-live"><span class="dot" aria-hidden="true"></span>MX + website checked</span>
+      </div>
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th scope="col">Company</th><th scope="col">Segment</th><th scope="col">City</th><th scope="col">Contact</th><th scope="col">Verified</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="company">Harbourline Foods SB</td><td class="muted">Food Importer</td><td class="muted">Johor Bahru</td><td><span class="check" aria-hidden="true">✓</span> <span class="muted">Email + phone</span></td><td class="mono muted">Sep 26 · MX</td></tr>
+            <tr><td class="company">Causeway Fresh Pte Ltd</td><td class="muted">Food Wholesaler</td><td class="muted">Singapore</td><td><span class="check" aria-hidden="true">✓</span> <span class="muted">Email + phone</span></td><td class="mono muted">Sep 26 · MX</td></tr>
+            <tr><td class="company">Skudai Coldchain SB</td><td class="muted">Cold Chain</td><td class="muted">Skudai</td><td><span class="check" aria-hidden="true">✓</span> <span class="muted">Email</span></td><td class="mono muted">Sep 26 · Web</td></tr>
+            <tr><td class="company">Tuas Provision Co</td><td class="muted">Food Importer</td><td class="muted">Singapore</td><td><span class="check" aria-hidden="true">✓</span> <span class="muted">Email + phone</span></td><td class="mono muted">Sep 26 · MX</td></tr>
+            <tr><td class="company">Pasir Gudang Mart SB</td><td class="muted">Food Wholesaler</td><td class="muted">Pasir Gudang</td><td><span class="check" aria-hidden="true">✓</span> <span class="muted">Email</span></td><td class="mono muted">Sep 26 · MX</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="terminal-foot">
+        <span><strong>100 records</strong> · MX + website verified</span>
+        <span class="mono">SGMY_Food100_v2026-09-06.csv</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST STRIP ============ -->
+<div class="trust">
+  <div class="container">
+    <ul class="trust-grid">
+      <li><div class="trust-num"><span data-count="100">100</span></div><div class="trust-label">Verified records</div></li>
+      <li><div class="trust-num"><span data-count="50">50</span> + <span data-count="50">50</span></div><div class="trust-label">MX verified + re-verified rows</div></li>
+      <li><div class="trust-num"><span data-count="14">14</span></div><div class="trust-label">Days bounce replacement</div></li>
+      <li><div class="trust-num"><span data-count="24">24</span>h</div><div class="trust-label">Manual delivery</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ DATA PREVIEW ============ -->
+<section id="preview">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Data preview</span>
+      <h2>See the data before you buy.</h2>
+      <p class="lead">Every record includes the information your sales team needs to decide whether a company is worth contacting. Below: 5 open rows showing the structure, plus locked rows from the paid set.</p>
+    </div>
+    <div class="terminal" data-reveal>
+      <div class="terminal-bar">
+        <span class="terminal-title">Sample · 5 open + locked rows</span>
+        <span class="terminal-live"><span class="dot" aria-hidden="true"></span>Source URL on every row</span>
+      </div>
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th scope="col">Company</th><th scope="col">Segment</th><th scope="col">City</th><th scope="col">Product focus</th><th scope="col">Phone</th><th scope="col">Verified</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="company">Harbourline Foods SB</td><td class="muted">Food Importer</td><td class="muted">Johor Bahru</td><td class="muted">Frozen seafood</td><td><span class="tag tag-ok">Available</span></td><td class="mono muted">2026-09-02 · MX</td></tr>
+            <tr><td class="company">Causeway Fresh Pte Ltd</td><td class="muted">Food Wholesaler</td><td class="muted">Singapore</td><td class="muted">Fresh produce</td><td><span class="tag tag-ok">Available</span></td><td class="mono muted">2026-09-03 · MX</td></tr>
+            <tr><td class="company">Skudai Coldchain SB</td><td class="muted">Cold Chain</td><td class="muted">Skudai</td><td class="muted">Dairy, chilled</td><td><span class="tag tag-na">Not listed</span></td><td class="mono muted">2026-09-03 · Web</td></tr>
+            <tr><td class="company">Tuas Provision Co</td><td class="muted">Food Importer</td><td class="muted">Singapore</td><td class="muted">Dry goods</td><td><span class="tag tag-ok">Available</span></td><td class="mono muted">2026-09-04 · MX</td></tr>
+            <tr><td class="company">Pasir Gudang Mart SB</td><td class="muted">Food Wholesaler</td><td class="muted">Pasir Gudang</td><td class="muted">Ambient, monthly</td><td><span class="tag tag-na">Not listed</span></td><td class="mono muted">2026-09-04 · Web</td></tr>
+            <tr class="blurred" aria-hidden="true"><td class="company">Locked Row 06</td><td class="muted">Food Importer</td><td class="muted">Johor Bahru</td><td class="muted">Frozen poultry</td><td><span class="tag tag-ok">Available</span></td><td class="mono muted">2026-09-04 · MX</td></tr>
+            <tr class="blurred" aria-hidden="true"><td class="company">Locked Row 07</td><td class="muted">Food Wholesaler</td><td class="muted">Singapore</td><td class="muted">Snacks</td><td><span class="tag tag-ok">Available</span></td><td class="mono muted">2026-09-05 · MX</td></tr>
+            <tr class="blurred" aria-hidden="true"><td class="company">Locked Row 08</td><td class="muted">Food Importer</td><td class="muted">Senai</td><td class="muted">Beverages</td><td><span class="tag tag-na">Not listed</span></td><td class="mono muted">2026-09-05 · Web</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="terminal-foot">
+        <span><strong>10 more rows available free</strong> - same structure, phone-first picks.</span>
+        <a href="#sample" data-track="sample_cta_click" data-cta="preview-table">Get the 10-row sample</a>
+      </div>
+    </div>
+    <p class="preview-note">Illustrative preview of the real record structure. Company names shown are samples; the delivered file contains verified businesses with business emails, source URLs and verification dates. No personal mobile numbers - only publicly listed business phones.</p>
+  </div>
+</section>
+
+<!-- ============ PROBLEM / SOLUTION ============ -->
+<section id="problem" style="padding-top:0">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Problem</span>
+      <h2>Your sales team shouldn’t spend every morning searching Google Maps.</h2>
+    </div>
+    <div class="problem-grid" data-reveal>
+      <div class="card"><span class="icon" aria-hidden="true">◷</span><h3>Hours wasted</h3><p>Salespeople spend hours manually finding companies instead of calling them.</p></div>
+      <div class="card"><span class="icon" aria-hidden="true">✉</span><h3>Missing contact data</h3><p>Websites often have incomplete business contact information. Emails are buried, phones are missing, and lists go stale fast.</p></div>
+      <div class="card"><span class="icon" aria-hidden="true">▦</span><h3>Generic databases</h3><p>Large generic datasets are rarely focused on the specific trade corridor or segment a sales team needs.</p></div>
+    </div>
+    <div class="solution-band" data-reveal>
+      <h3>Stop Searching Start Calling</h3>
+      <p>TradeData focuses on useful business records, not massive unfiltered databases. 100 records, one corridor, one vertical, checked in September 2026 - so your team starts calling on Monday instead of searching.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" style="background:var(--color-lavender-wash);border-top:1px solid var(--color-frost-border);border-bottom:1px solid var(--color-frost-border)">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">How it works</span>
+      <h2>From sample to sales calls in 3 steps.</h2>
+    </div>
+    <div class="steps" data-reveal>
+      <div class="card step"><div class="step-num">01</div><h3>Get the free sample</h3><p>Request 10 rows from the current JB-SG pilot. No sales call, no card required.</p></div>
+      <div class="card step"><div class="step-num">02</div><h3>Check the data</h3><p>Review company structure, contact information and verification sources. If it does not convince you, keep the sample and walk away.</p></div>
+      <div class="card step"><div class="step-num">03</div><h3>Get the full list</h3><p>Pay $49 once and receive the full 100-row CSV within 24 hours, with 14-day bounce replacement.</p></div>
+    </div>
+    <div class="steps-cta"><a class="btn btn-primary" href="#sample" data-track="sample_cta_click" data-cta="how">Get 10 Free Rows</a></div>
+  </div>
+</section>
+
+<!-- ============ VERIFICATION ============ -->
+<section id="verification">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Trust</span>
+      <h2>Data you can inspect.</h2>
+      <p class="lead">Every row includes a source URL and verification date. TradeData is not a black-box database.</p>
+    </div>
+    <div class="verify-grid" data-reveal>
+      <div class="card verify-item"><span class="check" aria-hidden="true">✓</span><div><h3>Source URL</h3><p>See exactly where each record came from. No hidden sources.</p></div></div>
+      <div class="card verify-item"><span class="check" aria-hidden="true">✓</span><div><h3>Verification date</h3><p>Each record carries its check date and method, so you know how fresh it is.</p></div></div>
+      <div class="card verify-item"><span class="check" aria-hidden="true">✓</span><div><h3>MX check</h3><p>Business email domains are verified against live mail records.</p></div></div>
+      <div class="card verify-item"><span class="check" aria-hidden="true">✓</span><div><h3>Website check</h3><p>Company websites are opened and confirmed before a row ships.</p></div></div>
+      <div class="card verify-item"><span class="check" aria-hidden="true">✓</span><div><h3>Public business phone where available</h3><p>Only publicly listed business phones. Never private mobile numbers.</p></div></div>
+      <div class="card verify-item"><span class="check" aria-hidden="true">✓</span><div><h3>Checked September 2026</h3><p>The current JB-SG pilot was verified this quarter, not scraped years ago.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section id="pricing" style="padding-top:0">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Pricing</span>
+      <h2>One pilot. One price. No subscription.</h2>
+    </div>
+    <div class="pricing-wrap" data-reveal>
+      <div class="card price-card">
+        <span class="pill" style="margin-bottom:16px">TradeData Pilot</span>
+        <div class="price">$49</div>
+        <p class="price-sub"><strong>One-time pilot</strong> · 100 verified JB-SG food traders</p>
+        <ul class="feature-list">
+          <li><span class="check" aria-hidden="true">✓</span>100-row CSV</li>
+          <li><span class="check" aria-hidden="true">✓</span>Business email</li>
+          <li><span class="check" aria-hidden="true">✓</span>Public phone where available</li>
+          <li><span class="check" aria-hidden="true">✓</span>Source URL</li>
+          <li><span class="check" aria-hidden="true">✓</span>Verification date</li>
+          <li><span class="check" aria-hidden="true">✓</span>MX + website verification</li>
+          <li><span class="check" aria-hidden="true">✓</span>14-day bounce replacement</li>
+          <li><span class="check" aria-hidden="true">✓</span>20 fresh rows within 14 days</li>
+          <li><span class="check" aria-hidden="true">✓</span>Delivery within 24 hours</li>
+        </ul>
+        <a class="btn btn-primary btn-block" href="#sample" data-purchase data-track="purchase_cta_click" data-cta="pricing">Get the Full 100 for $49 <span class="arr" aria-hidden="true">→</span></a>
+        <p class="delivery-note"><strong>Pay today → CSV delivered within 24 hours.</strong> Manual delivery by email with invoice - no account, no subscription, no software to install.</p>
+      </div>
+      <div>
+        <div class="card hover-shadow" style="margin-bottom:16px">
+          <h3 style="margin-bottom:8px">Who is this for?</h3>
+          <p style="font-size:15px;color:var(--color-slate)">Sales owners, GMs and BD leads at 5-40 person freight forwarders on the JB-SG causeway - plus KL producers and JB distributors selling into Singapore. If that’s you, the sample will prove itself in 30 seconds.</p>
+        </div>
+        <p class="sub-note hover-shadow">Want fresh lists every month? Pilot customers can discuss a <strong>$79/month</strong> continuation option. No checkout for that here - this pilot is a one-time $49 purchase.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUARANTEE ============ -->
+<section id="guarantee" style="padding-top:0">
+  <div class="container">
+    <div class="card guarantee-card" data-reveal>
+      <span class="eyebrow">Risk reversal</span>
+      <h2>Bounce protection, in writing.</h2>
+      <p>If more than <strong>10% of emails bounce</strong>, you get <strong>replacement rows or a refund within 7 days</strong>. We don’t claim 100% accuracy or guaranteed sales - we claim September 2026 MX + website checks, with the date on every row.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" style="padding-top:0">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions, answered plainly.</h2>
+    </div>
+    <div class="faq-list" data-reveal>
+      <details class="faq"><summary>Is this a generic lead database?</summary><div class="faq-body">No. TradeData is verified trade data for sales teams, focused on one corridor and one segment at a time. The current pilot covers JB-SG food traders - importers, wholesalers and cold-chain operators.</div></details>
+      <details class="faq"><summary>How recent is the data?</summary><div class="faq-body">Verified in September 2026 with MX + website checks. Every row carries its verification date and method.</div></details>
+      <details class="faq"><summary>Is every phone number guaranteed?</summary><div class="faq-body">No. Only publicly listed business phones are included. Rows without a public phone are marked “Not listed” so you know exactly what you’re getting.</div></details>
+      <details class="faq"><summary>How fast do I receive the list?</summary><div class="faq-body">Within 24 hours of payment, delivered manually by email as CSV with an invoice.</div></details>
+      <details class="faq"><summary>What if emails bounce?</summary><div class="faq-body">If over 10% bounce, you get replacement rows or a refund within 7 days. Just reply to the delivery email with the bounces.</div></details>
+      <details class="faq"><summary>Can I see the data before buying?</summary><div class="faq-body">Yes, a free 10-row sample with the same structure. Check the phone rate and sources, then decide.</div></details>
+      <details class="faq"><summary>Is this a subscription?</summary><div class="faq-body">No. The pilot is a one-time $49 purchase. Weekly fresh lists ($79/month) are an optional later step for pilot customers only.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SAMPLE FORM ============ -->
+<section class="sample" id="sample">
+  <div class="container sample-grid" data-reveal>
+    <div>
+      <span class="eyebrow">Free sample</span>
+      <h2>Get 10 free rows.</h2>
+      <p class="lead" style="margin-top:12px">Start with the current JB-SG pilot. Phone-first picks with the same columns as the paid file - company, segment, city, product focus, contact availability, source URL, verification date.</p>
+      <ul class="feature-list" style="margin-top:20px">
+        <li><span class="check" aria-hidden="true">✓</span>Delivered within 12 hours</li>
+        <li><span class="check" aria-hidden="true">✓</span>No sales call, no card required</li>
+        <li><span class="check" aria-hidden="true">✓</span>Keep it even if you don’t buy</li>
+      </ul>
+    </div>
+    <div class="card form-card">
+      <form id="sample-form" action="https://formspree.io/f/mljellvo" method="POST" novalidate>
+        <div class="field" data-field="company">
+          <label for="f-company">Company</label>
+          <input id="f-company" name="company" type="text" autocomplete="organization" placeholder="Your company name">
+          <p class="error-msg">Please enter your company name.</p>
+        </div>
+        <div class="field" data-field="email">
+          <label for="f-email">Business email</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@company.com">
+          <p class="hint">Use your work email - samples go to business addresses only.</p>
+          <p class="error-msg">Please enter a valid business email.</p>
+        </div>
+        <div class="field" data-field="role">
+          <label for="f-role">Role</label>
+          <select id="f-role" name="role">
+            <option value="">Select your role…</option>
+            <option>Owner / Founder</option>
+            <option>General Manager</option>
+            <option>Sales Manager</option>
+            <option>Business Development</option>
+            <option>Other</option>
+          </select>
+          <p class="error-msg">Please select your role.</p>
+        </div>
+        <div class="field" data-field="segment">
+          <label for="f-segment">Segment needed</label>
+          <select id="f-segment" name="segment">
+            <option value="">Select a segment…</option>
+            <option>Food importers</option>
+            <option>Food wholesalers</option>
+            <option>Cold chain / chilled</option>
+            <option>Mixed / not sure yet</option>
+          </select>
+          <p class="error-msg">Please select a segment.</p>
+        </div>
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p class="submit-error" id="form-error" role="alert">Something went wrong sending your request. Please try again or email us directly.</p>
+        <button class="btn btn-primary btn-block" type="submit" id="sample-submit">Send Me the 10-Row Sample <span class="arr" aria-hidden="true">→</span></button>
+      </form>
+      <div class="form-success" id="form-success" role="status" aria-live="polite">
+        <div class="success-check" aria-hidden="true">✓</div>
+        <h3>Your sample request is ready.</h3>
+        <p id="success-text">Thanks. Your 10-row sample is on its way to your inbox (within 12 hours).</p>
+        <a class="btn btn-primary btn-block" id="success-cta" href="#" data-track="sample_cta_click" data-cta="success">Open the 10-Row Sample</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="final">
+  <div class="container">
+    <h2>Stop Searching Start Calling</h2>
+    <p>TradeData pilot: 100 verified JB-SG food traders, $49 once, in your inbox within 24 hours. Check the free sample first. It takes 30 seconds.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#sample" data-track="sample_cta_click" data-cta="final">Get 10 Free Rows <span class="arr" aria-hidden="true">→</span></a>
+      <a class="btn btn-ghost" href="#sample" data-purchase data-track="purchase_cta_click" data-cta="final-purchase">Request the $49 Pilot</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site">
+  <div class="container">
+    <p class="foot-legal foot-center" style="margin-top:0">B2B contact information is sourced from publicly available business sources. If you do not want further outreach, contact us and we will process your request within 48 hours. Pilot terms: one-time $49 purchase, CSV delivery within 24 hours of payment, 14-day bounce replacement, 7-day replacement-or-refund on &gt;10% bounce. <strong style="color:var(--color-midnight-ink)">Pilot customers wanted:</strong> no inflated user counts, no fake testimonials - this is the September 2026 pilot batch.</p>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   CONFIG - change these three values when real links are ready.
+   No other code changes needed.
+   ===================================================================== */
+const CONFIG = {
+  // Payment/delivery request link (Wise / PayNow / bank instructions page).
+  // Empty => purchase buttons fall back to a pre-addressed email.
+  PILOT_PAYMENT_URL: "",
+  // Inbox that receives pilot requests and opt-out/STOP mails.
+  CONTACT_EMAIL: "info@ai2eo.com",
+  // View-only Google Sheet with the 10-row free sample.
+  // Empty => success panel promises email delivery instead of a button.
+  SAMPLE_SHEET_URL: ""
+};
+
+/* ============ Lightweight conversion tracking ============
+   Events: sample_cta_click, sample_form_start, sample_form_submit,
+   purchase_cta_click. Pushed to window.dataLayer (attach GA/Plausible
+   later); no external analytics loaded by default. */
+window.dataLayer = window.dataLayer || [];
+function trackEvent(name, detail) {
+  window.dataLayer.push(Object.assign({ event: name }, detail || {}));
+  if (window.console && console.debug) console.debug("[track]", name, detail || "");
+}
+document.querySelectorAll("[data-track]").forEach(function (el) {
+  el.addEventListener("click", function () {
+    trackEvent(el.getAttribute("data-track"), { cta: el.getAttribute("data-cta") || "" });
+  });
+});
+
+/* Nav scroll state (floating pill compacts after 100px) */
+(function () {
+  const nav = document.querySelector(".site-nav");
+  if (!nav) return;
+  const onScroll = function () {
+    nav.setAttribute("data-state", window.scrollY > 100 ? "scrolled" : "rest");
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+})();
+
+/* Hero cursor spotlight (hero only, palette blue at 10%) */
+(function () {
+  const hero = document.querySelector(".hero");
+  const spot = document.querySelector(".hero-spotlight");
+  if (!hero || !spot) return;
+  hero.addEventListener("mousemove", function (e) {
+    const r = hero.getBoundingClientRect();
+    spot.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100) + "%");
+    spot.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100) + "%");
+  });
+})();
+
+/* Scroll reveal (disabled under prefers-reduced-motion via CSS) */
+(function () {
+  const els = document.querySelectorAll("[data-reveal]");
+  if (!("IntersectionObserver" in window)) {
+    els.forEach(function (el) { el.classList.add("in"); });
+    return;
+  }
+  const io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+
+/* Trust-strip counters: fast count-up when scrolled into view */
+(function () {
+  const nums = document.querySelectorAll("[data-count]");
+  if (!nums.length) return;
+  const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const run = function (el) {
+    const target = parseInt(el.getAttribute("data-count"), 10);
+    if (reduced || isNaN(target)) { el.textContent = target; return; }
+    const dur = 900, t0 = performance.now();
+    const tick = function (t) {
+      const p = Math.min((t - t0) / dur, 1);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  if (!("IntersectionObserver" in window)) {
+    nums.forEach(run);
+    return;
+  }
+  const io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { run(en.target); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.4 });
+  nums.forEach(function (el) { io.observe(el); });
+})();
+
+/* Purchase buttons: configurable payment URL, mailto fallback */
+document.querySelectorAll("[data-purchase]").forEach(function (el) {
+  el.addEventListener("click", function (ev) {
+    if (CONFIG.PILOT_PAYMENT_URL) {
+      el.setAttribute("href", CONFIG.PILOT_PAYMENT_URL);
+      return; // default anchor navigation proceeds
+    }
+    ev.preventDefault();
+    const subject = encodeURIComponent("TradeData Pilot - Full 100 rows ($49)");
+    const body = encodeURIComponent("Hi,\n\nI want the TradeData JB-SG pilot (100 verified food traders, $49 one-time).\n\nCompany:\nName:\n\nPlease send payment details. Thanks.");
+    window.location.href = "mailto:" + CONFIG.CONTACT_EMAIL + "?subject=" + subject + "&body=" + body;
+  }, { capture: true });
+});
+
+/* ============ Sample form ============ */
+(function () {
+  const form = document.getElementById("sample-form");
+  const success = document.getElementById("form-success");
+  const successCta = document.getElementById("success-cta");
+  const successText = document.getElementById("success-text");
+  const loadedAt = Date.now();
+  let started = false;
+
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const freeMail = /@(gmail|yahoo|hotmail|outlook|live|icloud|protonmail|zoho)\./i;
+
+  function setInvalid(name, bad) {
+    const wrap = form.querySelector('[data-field="' + name + '"]');
+    if (wrap) wrap.classList.toggle("invalid", !!bad);
+    return !bad;
+  }
+
+  ["company", "email", "role", "segment"].forEach(function (name) {
+    const input = form.elements[name];
+    if (!input) return;
+    input.addEventListener("focus", function () {
+      if (!started) { started = true; trackEvent("sample_form_start", {}); }
+    }, { once: true });
+    input.addEventListener("input", function () { setInvalid(name, false); });
+    input.addEventListener("change", function () { setInvalid(name, false); });
+  });
+
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    // Basic abuse protection: honeypot + minimum human fill time.
+    const hp = form.elements["website"];
+    if ((hp && hp.value) || (Date.now() - loadedAt) < 2000) return;
+
+    const company = form.elements["company"].value.trim();
+    const email = form.elements["email"].value.trim();
+    const role = form.elements["role"].value;
+    const segment = form.elements["segment"].value;
+
+    let ok = true;
+    ok = setInvalid("company", company.length < 2) && ok;
+    ok = setInvalid("email", !emailRe.test(email)) && ok;
+    ok = setInvalid("role", !role) && ok;
+    ok = setInvalid("segment", !segment) && ok;
+    if (!ok) {
+      const firstBad = form.querySelector(".field.invalid input, .field.invalid select");
+      if (firstBad) firstBad.focus();
+      return;
+    }
+
+    const payload = { company: company, email: email, role: role, segment: segment, at: new Date().toISOString() };
+    try { window.localStorage.setItem("jbsg_sample_request", JSON.stringify(payload)); } catch (e) { /* private mode */ }
+    trackEvent("sample_form_submit", { segment: segment, role: role });
+
+    // Deliver the lead to info@ai2eo.com via Formspree (AJAX keeps the on-page success state).
+    const submitBtn = document.getElementById("sample-submit");
+    const formError = document.getElementById("form-error");
+    const originalLabel = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = "Sending…";
+    fetch("https://formspree.io/f/mljellvo", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        company: company,
+        email: email,
+        role: role,
+        segment: segment,
+        _subject: "TradeData sample request - 10 free rows"
+      })
+    }).then(function (res) {
+      if (!res.ok) throw new Error("formspree");
+      showSuccess();
+    }).catch(function () {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalLabel;
+      formError.classList.add("show");
+    });
+
+    function showSuccess() {
+
+    if (freeMail.test(email)) {
+      successText.textContent = "Thanks. Noted. We prioritize business emails, but your 10-row sample will still be reviewed and sent within 12 hours.";
+    }
+    if (CONFIG.SAMPLE_SHEET_URL) {
+      successCta.setAttribute("href", CONFIG.SAMPLE_SHEET_URL);
+      successCta.style.display = "";
+    } else {
+      successCta.style.display = "none";
+      successText.textContent += " Watch your inbox. No account needed.";
+    }
+    form.style.display = "none";
+    success.classList.add("show");
+    success.querySelector("h3").setAttribute("tabindex", "-1");
+    success.querySelector("h3").focus({ preventScroll: false });
+    } // end showSuccess
+  });
+})();
+</script>
+</body>
+</html>
