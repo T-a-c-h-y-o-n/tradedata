@@ -26,7 +26,7 @@ no other code changes needed:
 ```js
 const CONFIG = {
   PILOT_PAYMENT_URL: "",              // Wise / PayNow / bank link. Empty = mailto fallback
-  CONTACT_EMAIL: "hello@YOURDOMAIN.com",
+  CONTACT_EMAIL: "tradedata@ai2eo.com",
   SAMPLE_SHEET_URL: ""                // View-only Google Sheet with the 10-row sample
 };
 ```

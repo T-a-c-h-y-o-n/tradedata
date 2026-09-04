@@ -655,7 +655,7 @@ const CONFIG = {
   // Empty => purchase buttons fall back to a pre-addressed email.
   PILOT_PAYMENT_URL: "",
   // Inbox that receives pilot requests and opt-out/STOP mails.
-  CONTACT_EMAIL: "info@ai2eo.com",
+  CONTACT_EMAIL: "tradedata@ai2eo.com",
   // View-only Google Sheet with the 10-row free sample.
   // Empty => success panel promises email delivery instead of a button.
   SAMPLE_SHEET_URL: ""
@@ -810,7 +810,7 @@ document.querySelectorAll("[data-purchase]").forEach(function (el) {
     try { window.localStorage.setItem("jbsg_sample_request", JSON.stringify(payload)); } catch (e) { /* private mode */ }
     trackEvent("sample_form_submit", { segment: segment, role: role });
 
-    // Deliver the lead to info@ai2eo.com via Formspree (AJAX keeps the on-page success state).
+    // Deliver the lead to the TradeData inbox via Formspree (AJAX keeps the on-page success state).
     const submitBtn = document.getElementById("sample-submit");
     const formError = document.getElementById("form-error");
     const originalLabel = submitBtn.innerHTML;
