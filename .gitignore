@@ -1,1 +1,7 @@
+# Lead data + internal docs - never push to public repo
+*.csv
+5-gunluk-cash-sprint.md
+5-gunluk-cash-sprint.pdf
 
+# Keep the landing page + docs visible
+!README.md
